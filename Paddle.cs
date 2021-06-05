@@ -11,6 +11,7 @@ namespace Brick_Breaker
     class Paddle : PictureBox
     {
         private int _jump = 6;
+        string _power;
         public Paddle(int x, int y, Color c)
         {
             // TODO: Complete member initialization
@@ -35,6 +36,17 @@ namespace Brick_Breaker
             }
         }
 
+        public string Power { get => _power; set => _power = value; }
+        public void addPower(string power)
+        {
+            this.Power = power;
+            this.Jump = 8;
+        }
+        public void removePower()
+        {
+            this.Power = null;
+            this.Jump = 6;
+        }
         public void Display(Graphics g)
         {
             g.FillRectangle(new SolidBrush(this.BackColor), new Rectangle(this.Location.X, this.Location.Y, this.Width, this.Height));

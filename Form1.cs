@@ -18,6 +18,7 @@ namespace Brick_Breaker
         Ball ball;
         Power[,] power = new Power[5, 11];
         bool UptoDown = false;
+        int timer = 0;
         public Form1()
         {
             InitializeComponent();
@@ -31,7 +32,7 @@ namespace Brick_Breaker
                 {
                     if (i == 4)
                     {
-                        power[i,j] = new Power(x, y, 20, 20, "heart", @"..\..\Resources\heart.png");
+                        power[i,j] = new Power(x, y, 20, 20, "heart", @"..\..\Resources\speed.png");
                     }
                     else
                         power[i, j] = null;
@@ -105,11 +106,24 @@ namespace Brick_Breaker
                         ball.Direction = BallDirection.UP_RIGHT;
                 }
             }
+            else if (ball.Bounds.IntersectsWith(topWall.Bounds))
+            {
+                if (ball.Direction == BallDirection.UP)
+                    ball.Direction = BallDirection.DOWN;
+                else if (ball.Direction == BallDirection.UP_RIGHT)
+                {
+                    ball.Direction = BallDirection.DOWN_RIGHT;
+                }
+                else if (ball.Direction == BallDirection.UP_LEFT)
+                {
+                    ball.Direction = BallDirection.DOWN_LEFT;
+                }
+                UptoDown = true;
+            }
             else if (ball.Bounds.IntersectsWith(bottomWall.Bounds))
             {
                 game_timer.Stop();
                 MessageBox.Show("You Loose");
-
             }
 
         }
@@ -119,35 +133,17 @@ namespace Brick_Breaker
             {
                 if (ball.Location.X > paddle.Location.X + (paddle.Width / 2 - 10) && ball.Location.X < paddle.Location.X + (paddle.Width / 2 + 10))
                     ball.Direction = BallDirection.UP;
-                else if (ball.Location.X < paddle.Location.X + (paddle.Width / 2 - 10))
-                {
-                    if (ball.Direction == BallDirection.DOWN_RIGHT)
-                        ball.Direction = BallDirection.UP_RIGHT;
-                    else
-                        ball.Direction = BallDirection.UP_LEFT;
-                }
-                else if (ball.Location.X > paddle.Location.X + (paddle.Width / 2 + 10))
-                {
-                    if (ball.Direction == BallDirection.DOWN_RIGHT)
-                        ball.Direction = BallDirection.UP_RIGHT;
-                    else
-                        ball.Direction = BallDirection.UP_LEFT;
-                }
-                else if (ball.Location.Y >= paddle.Location.Y)
-                {
-                    if (ball.Location.X <= paddle.Location.X)
-                        ball.Direction = BallDirection.LEFT;
-                    else
-                        ball.Direction = BallDirection.RIGHT;
-                }
                 else if (ball.Direction == BallDirection.DOWN_RIGHT)
-                    ball.Direction = BallDirection.UP_RIGHT;
-                else if (ball.Direction == BallDirection.DOWN_LEFT)
+                        ball.Direction = BallDirection.UP_RIGHT;     
+                else if(ball.Direction == BallDirection.DOWN_LEFT)
                     ball.Direction = BallDirection.UP_LEFT;
-                else if (ball.Direction == BallDirection.UP_RIGHT)
-                    ball.Direction = BallDirection.DOWN_RIGHT;
-                else if (ball.Direction == BallDirection.UP_LEFT)
-                    ball.Direction = BallDirection.DOWN_LEFT;
+                else if(ball.Direction == BallDirection.DOWN)
+                {
+                    if (ball.Location.X <= paddle.Location.X + (paddle.Width / 2 - 10))
+                        ball.Direction = BallDirection.UP_LEFT;
+                    else
+                        ball.Direction = BallDirection.UP_RIGHT;
+                }
                 UptoDown = false;
 
             }
@@ -168,13 +164,12 @@ namespace Brick_Breaker
 
                                 power[i, j].Visible = false;
                                 power[i, j].Image = null;
-                                Console.WriteLine("power acheived!");
+                                paddle.addPower(power[i, j].Type);
                             }
                             if (power[i, j].Bounds.IntersectsWith(bottomWall.Bounds))
                             {
                                 power[i, j].Visible = false;
                                 power[i, j].Image = null;
-                                Console.WriteLine("power wasted!");
                             }
                         }
                     }
@@ -189,33 +184,37 @@ namespace Brick_Breaker
                 {
                     if (ball.Bounds.IntersectsWith(b.Bounds) && b.State && ball.Location.Y < 250)
                     {
-                        if (ball.Location.X > b.Location.X + (b.Width / 2 - 10) && ball.Location.X < b.Location.X + (b.Width / 2 + 10))
-                            ball.Direction = BallDirection.DOWN;
-                        else if (ball.Location.X < b.Location.X + (b.Width / 2 - 10))
+                        if (ball.Location.Y >= (b.Location.Y + b.Height) - 5)
+                        {
+                            if (ball.Direction == BallDirection.UP)
+                                ball.Direction = BallDirection.DOWN;
+                            else if (ball.Direction == BallDirection.UP_RIGHT)
+                            {
+                                ball.Direction = BallDirection.DOWN_RIGHT;
+                            }
+                            else if (ball.Direction == BallDirection.UP_LEFT)
+                            {
+                                ball.Direction = BallDirection.DOWN_LEFT;
+                            }
+                        }
+                        else if(ball.Location.Y < (b.Location.Y + b.Height) && ball.Location.Y > b.Location.Y)
                         {
                             if (ball.Direction == BallDirection.UP_RIGHT)
-                                ball.Direction = BallDirection.DOWN_RIGHT;
-                            else
+                                ball.Direction = BallDirection.UP_LEFT;
+                            else if (ball.Direction == BallDirection.DOWN_RIGHT)
                                 ball.Direction = BallDirection.DOWN_LEFT;
-                        }
-                        else if (ball.Location.X > b.Location.X + (b.Width / 2 + 10))
-                        {
-                            if (ball.Direction == BallDirection.UP_RIGHT)
+                            else if (ball.Direction == BallDirection.UP_LEFT)
+                                ball.Direction = BallDirection.UP_RIGHT;
+                            else if (ball.Direction == BallDirection.DOWN_LEFT)
                                 ball.Direction = BallDirection.DOWN_RIGHT;
-                            else
-                                ball.Direction = BallDirection.DOWN_LEFT;
                         }
-                        else if(ball.Location.Y >= b.Location.Y && ball.Location.Y < (b.Location.Y+b.Height))
+                        else if (ball.Location.Y < b.Location.Y - 5)
                         {
-                            if (ball.Location.X <= b.Location.X)
-                                ball.Direction = BallDirection.LEFT;
-                            else
-                                ball.Direction = BallDirection.RIGHT;
+                            if (ball.Direction == BallDirection.DOWN_RIGHT)
+                                ball.Direction = BallDirection.UP_RIGHT;
+                            else if (ball.Direction == BallDirection.DOWN_LEFT)
+                                ball.Direction = BallDirection.UP_LEFT;
                         }
-                        else if (ball.Direction == BallDirection.UP_LEFT)
-                            ball.Direction = BallDirection.DOWN_LEFT;
-                        else if (ball.Direction == BallDirection.UP_RIGHT)
-                            ball.Direction = BallDirection.DOWN_RIGHT;
                         UptoDown = true;
                         b.remove();
                         if (b.hasPower())
@@ -234,6 +233,16 @@ namespace Brick_Breaker
             CheckPaddleCollision();
             CheckBrickCollision();
             CheckPowerCollision();
+            if(timer >= 0 && paddle.Power != null)
+            {
+                timer++;
+            }
+            if(timer == 100)
+            {
+                timer = 0;
+                paddle.removePower();
+            }
+            
             Playarea.Invalidate();
         }
 
