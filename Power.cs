@@ -13,15 +13,13 @@ namespace Brick_Breaker
     {
         string _type;
         int _dropspeed;
-        string path;
 
         public Power(int x, int y, int width, int height, string type,string img_path)
         {
             this.Location = new Point(x, y);
             this.Size = new Size(width, height);
             this._type = type;
-            path = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()))+@"\Resources\power.png";
-            this.Image = Image.FromFile(path);
+            this.Image = Image.FromFile(img_path);
             this._dropspeed = 4;
         }
 
@@ -35,8 +33,8 @@ namespace Brick_Breaker
         }
         public void Display(Graphics g)
         {
+            
             g.DrawImage(this.Image, this.Location.X, this.Location.Y);
-            Console.WriteLine(this.Location + ", "+ path);
             //g.FillEllipse(new SolidBrush(this.BackColor), new Rectangle(this.Location.X, this.Location.Y, this.Width, this.Height));
         }
     }

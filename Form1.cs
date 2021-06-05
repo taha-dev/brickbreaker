@@ -16,7 +16,7 @@ namespace Brick_Breaker
         Paddle paddle;
         Graphics graphics;
         Ball ball;
-        Power power;
+        Power[,] power = new Power[5, 11];
         bool UptoDown = false;
         public Form1()
         {
@@ -29,7 +29,13 @@ namespace Brick_Breaker
             {
                 for (int j = 0; j < 11; j++)
                 {
-                    bricks[i, j] = new Brick(new Point(x, y), Color.Black, 1, (i == 4)?"power":"nopower");
+                    if (i == 4)
+                    {
+                        power[i,j] = new Power(x, y, 20, 20, "heart", @"..\..\Resources\heart.png");
+                    }
+                    else
+                        power[i, j] = null;
+                    bricks[i, j] = new Brick(new Point(x, y), Color.Black, 1, power[i, j]);
                     x += 60;
                 }
                 y += 40;
@@ -48,26 +54,6 @@ namespace Brick_Breaker
             game_timer.Start();
         }
 
-        /* private void Playarea_KeyPress(object sender, KeyPressEventArgs e)
-           {
-               int i = -1, j = -1;
-               if(e.KeyChar >= '0' && e.KeyChar <= '4')
-               {
-                   i = 0;
-                   j = Int16.Parse(e.KeyChar.ToString());
-               }
-               else if(e.KeyChar >= '5' && e.KeyChar <= '9')
-               {
-                   i = 1;
-                   j = Int16.Parse(e.KeyChar.ToString()) - 5;
-               }
-               if(i > -1 && j > -1)
-               {
-                   bricks[i, j].remove();
-                   Playarea.Invalidate();
-               }
-           }*/
-
         private void Playarea_Paint(object sender, PaintEventArgs e)
         {
             int x = 5, y = 5;
@@ -76,6 +62,9 @@ namespace Brick_Breaker
                 for (int j = 0; j < 11; j++)
                 {
                     bricks[i, j].Display(graphics);
+                    if (bricks[i, j].hasPower() && !bricks[i, j].State)
+                        if(bricks[i,j].BrickPower.Image != null)
+                        bricks[i, j].BrickPower.Display(graphics);
                     x += 60;
                 }
                 y += 40;
@@ -83,8 +72,6 @@ namespace Brick_Breaker
             }
             paddle.Display(graphics);
             ball.Display(graphics);
-            if(power != null)
-                power.Display(graphics);
         }
         private void CheckWallCollison()
         {
@@ -165,6 +152,35 @@ namespace Brick_Breaker
 
             }
         }
+        private void CheckPowerCollision()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 11; j++)
+                {
+                    if (bricks[i, j].hasPower() && !bricks[i, j].State)
+                    {
+                        if (power[i, j].Location.Y < bottomWall.Location.Y && power[i, j].Visible)
+                        {
+                            power[i, j].DropPower();
+                            if (power[i, j].Bounds.IntersectsWith(paddle.Bounds))
+                            {
+
+                                power[i, j].Visible = false;
+                                power[i, j].Image = null;
+                                Console.WriteLine("power acheived!");
+                            }
+                            if (power[i, j].Bounds.IntersectsWith(bottomWall.Bounds))
+                            {
+                                power[i, j].Visible = false;
+                                power[i, j].Image = null;
+                                Console.WriteLine("power wasted!");
+                            }
+                        }
+                    }
+                }
+            }
+        }
         private void CheckBrickCollision()
         {
             if (ball.Location.Y < 250)
@@ -202,12 +218,11 @@ namespace Brick_Breaker
                             ball.Direction = BallDirection.DOWN_RIGHT;
                         UptoDown = true;
                         b.remove();
-                        if (b.Power == "power")
+                        if (b.hasPower())
                         {
-                            power = new Power(b.Location.X, b.Location.Y, 20, 20, "power", @"..\..\Resources\power.png");
-                            power.Display(graphics);
+                            b.BrickPower.Display(graphics);
                         }
-                        break;
+                        
                     }
                 }
             }
@@ -218,6 +233,7 @@ namespace Brick_Breaker
             CheckWallCollison();
             CheckPaddleCollision();
             CheckBrickCollision();
+            CheckPowerCollision();
             Playarea.Invalidate();
         }
 

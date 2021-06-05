@@ -13,8 +13,8 @@ namespace Brick_Breaker
         bool _state;
         int _strength;
         int _hits;
-        string _power;
-        public Brick(Point point, Color color, int strength, string power)
+        Power _power;
+        public Brick(Point point, Color color, int strength, Power power=null)
         {
             this.Width = 50;
             this.Height = 30;
@@ -28,7 +28,7 @@ namespace Brick_Breaker
 
         public bool State { get => _state; set => _state = value; }
         public int Strength { get => _strength; set => _strength = value; }
-        public string Power { get => _power; set => _power = value; }
+        internal Power BrickPower { get => this._power; set => this._power = value; }
 
         public void Display(Graphics g)
         {
@@ -48,9 +48,11 @@ namespace Brick_Breaker
                 this._hits++;
             }
         }
-        public void displayPower(Graphics g)
+        public bool hasPower()
         {
-            g.FillRectangle(new SolidBrush(Color.Blue), new Rectangle(this.Location.X, this.Location.Y, 20, 20));
+            if (BrickPower != null)
+                return true;
+            return false;
         }
 
     }
