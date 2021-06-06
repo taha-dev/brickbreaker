@@ -10,7 +10,7 @@ namespace Brick_Breaker
 {
     class Paddle : PictureBox
     {
-        private int _jump = 6;
+        private int _jump = 8;
         string _power;
         public Paddle(int x, int y, Color c)
         {
@@ -40,12 +40,12 @@ namespace Brick_Breaker
         public void addPower(string power)
         {
             this.Power = power;
-            this.Jump = 8;
+            this.Jump = 10;
         }
         public void removePower()
         {
             this.Power = null;
-            this.Jump = 6;
+            this.Jump = 10;
         }
         public void Display(Graphics g)
         {

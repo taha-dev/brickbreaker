@@ -114,6 +114,7 @@ namespace Brick_Breaker
             this.Text = "Brick Breaker";
             this.Shown += new System.EventHandler(this.Playarea_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             this.Playarea.ResumeLayout(false);
             this.ResumeLayout(false);
 

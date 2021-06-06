@@ -8,3 +8,4 @@ C:\Users\W4R10CK\source\repos\Brick Breaker\obj\Debug\Brick Breaker.csproj.CoreC
 C:\Users\W4R10CK\source\repos\Brick Breaker\obj\Debug\Brick Breaker.exe
 C:\Users\W4R10CK\source\repos\Brick Breaker\obj\Debug\Brick Breaker.pdb
 C:\Users\W4R10CK\source\repos\Brick Breaker\obj\Debug\Brick_Breaker.Form1.resources
+C:\Users\W4R10CK\source\repos\Brick Breaker\obj\Debug\Brick_Breaker.SplashScreen.resources

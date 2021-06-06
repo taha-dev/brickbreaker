@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace Brick_Breaker
 {
@@ -18,13 +19,15 @@ namespace Brick_Breaker
         Ball ball;
         Power[,] power = new Power[5, 11];
         bool UptoDown = false;
-        int timer = 0;
+        int timer = 0, bricks_count = 55;
+        SoundPlayer hit_paddle_wall;
         public Form1()
         {
             InitializeComponent();
             graphics = Playarea.CreateGraphics();
             paddle = new Paddle(Playarea.Width / 2, Playarea.Height - 30, Color.Red);
             ball = new Ball(Playarea.Width / 2, Playarea.Height - 70);
+            hit_paddle_wall = new SoundPlayer(@"..\..\Resources\paddle_wall_col.wav");
             int x = 5, y = 5;
             for (int i = 0; i < 5; i++)
             {
@@ -36,7 +39,7 @@ namespace Brick_Breaker
                     }
                     else
                         power[i, j] = null;
-                    bricks[i, j] = new Brick(new Point(x, y), Color.Black, 1, power[i, j]);
+                    bricks[i, j] = new Brick(new Point(x, y), Color.Black, 3, power[i, j]);
                     x += 60;
                 }
                 y += 40;
@@ -78,6 +81,7 @@ namespace Brick_Breaker
         {
             if (ball.Bounds.IntersectsWith(rightWall.Bounds))
             {
+                hit_paddle_wall.Play();
                 if (ball.Direction == BallDirection.DOWN_RIGHT)
                     ball.Direction = BallDirection.DOWN_LEFT;
                 else if (ball.Direction == BallDirection.UP_RIGHT)
@@ -94,6 +98,7 @@ namespace Brick_Breaker
 
             else if (ball.Bounds.IntersectsWith(leftWall.Bounds))
             {
+                hit_paddle_wall.Play();
                 if (ball.Direction == BallDirection.UP_LEFT)
                     ball.Direction = BallDirection.UP_RIGHT;
                 else if (ball.Direction == BallDirection.DOWN_LEFT)
@@ -108,6 +113,7 @@ namespace Brick_Breaker
             }
             else if (ball.Bounds.IntersectsWith(topWall.Bounds))
             {
+                hit_paddle_wall.Play();
                 if (ball.Direction == BallDirection.UP)
                     ball.Direction = BallDirection.DOWN;
                 else if (ball.Direction == BallDirection.UP_RIGHT)
@@ -131,6 +137,7 @@ namespace Brick_Breaker
         {
             if (ball.Bounds.IntersectsWith(paddle.Bounds) && UptoDown == true)
             {
+                hit_paddle_wall.Play();
                 if (ball.Location.X > paddle.Location.X + (paddle.Width / 2 - 10) && ball.Location.X < paddle.Location.X + (paddle.Width / 2 + 10))
                     ball.Direction = BallDirection.UP;
                 else if (ball.Direction == BallDirection.DOWN_RIGHT)
@@ -216,9 +223,9 @@ namespace Brick_Breaker
                                 ball.Direction = BallDirection.UP_LEFT;
                         }
                         UptoDown = true;
-                        b.remove();
-                        if (b.hasPower())
+                        if (b.remove() && b.hasPower())
                         {
+                            bricks_count--;
                             b.BrickPower.Display(graphics);
                         }
                         
@@ -242,8 +249,20 @@ namespace Brick_Breaker
                 timer = 0;
                 paddle.removePower();
             }
-            
+            if(bricks_count < 1)
+            {
+                game_timer.Stop();
+                MessageBox.Show("You Won");
+            }
             Playarea.Invalidate();
+        }
+
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 'p' || e.KeyChar == 'P')
+                game_timer.Stop();
+            else if ((e.KeyChar == 'r' || e.KeyChar == 'R') && bricks_count > 0)
+                game_timer.Start();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
