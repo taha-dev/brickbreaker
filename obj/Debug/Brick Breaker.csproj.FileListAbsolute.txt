@@ -9,3 +9,15 @@ C:\Users\W4R10CK\source\repos\Brick Breaker\obj\Debug\Brick Breaker.exe
 C:\Users\W4R10CK\source\repos\Brick Breaker\obj\Debug\Brick Breaker.pdb
 C:\Users\W4R10CK\source\repos\Brick Breaker\obj\Debug\Brick_Breaker.Form1.resources
 C:\Users\W4R10CK\source\repos\Brick Breaker\obj\Debug\Brick_Breaker.SplashScreen.resources
+C:\Users\Taha\Desktop\Brick Breaker\brickbreaker\bin\Debug\Brick Breaker.exe.config
+C:\Users\Taha\Desktop\Brick Breaker\brickbreaker\bin\Debug\Brick Breaker.exe
+C:\Users\Taha\Desktop\Brick Breaker\brickbreaker\bin\Debug\Brick Breaker.pdb
+C:\Users\Taha\Desktop\Brick Breaker\brickbreaker\obj\Debug\Brick Breaker.csproj.AssemblyReference.cache
+C:\Users\Taha\Desktop\Brick Breaker\brickbreaker\obj\Debug\Brick_Breaker.Form1.resources
+C:\Users\Taha\Desktop\Brick Breaker\brickbreaker\obj\Debug\Brick_Breaker.Properties.Resources.resources
+C:\Users\Taha\Desktop\Brick Breaker\brickbreaker\obj\Debug\Brick_Breaker.SplashScreen.resources
+C:\Users\Taha\Desktop\Brick Breaker\brickbreaker\obj\Debug\Brick Breaker.csproj.GenerateResource.cache
+C:\Users\Taha\Desktop\Brick Breaker\brickbreaker\obj\Debug\Brick Breaker.csproj.CoreCompileInputs.cache
+C:\Users\Taha\Desktop\Brick Breaker\brickbreaker\obj\Debug\Brick Breaker.exe
+C:\Users\Taha\Desktop\Brick Breaker\brickbreaker\obj\Debug\Brick Breaker.pdb
+C:\Users\Taha\Desktop\Brick Breaker\brickbreaker\obj\Debug\Brick_Breaker.Level1.resources

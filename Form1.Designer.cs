@@ -29,15 +29,11 @@ namespace Brick_Breaker
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.Playarea = new System.Windows.Forms.Panel();
-            this.bottomWall = new System.Windows.Forms.Panel();
-            this.topWall = new System.Windows.Forms.Panel();
-            this.rightWall = new System.Windows.Forms.Panel();
-            this.leftWall = new System.Windows.Forms.Panel();
-            this.game_timer = new System.Windows.Forms.Timer(this.components);
-            this.Playarea.SuspendLayout();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.btn_level1 = new System.Windows.Forms.Button();
+            this.btn_level2 = new System.Windows.Forms.Button();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -45,77 +41,50 @@ namespace Brick_Breaker
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(140, 450);
+            this.panel1.Size = new System.Drawing.Size(200, 450);
             this.panel1.TabIndex = 0;
             // 
-            // Playarea
+            // panel2
             // 
-            this.Playarea.Controls.Add(this.bottomWall);
-            this.Playarea.Controls.Add(this.topWall);
-            this.Playarea.Controls.Add(this.rightWall);
-            this.Playarea.Controls.Add(this.leftWall);
-            this.Playarea.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Playarea.Location = new System.Drawing.Point(140, 0);
-            this.Playarea.Name = "Playarea";
-            this.Playarea.Size = new System.Drawing.Size(660, 450);
-            this.Playarea.TabIndex = 1;
-            this.Playarea.Paint += new System.Windows.Forms.PaintEventHandler(this.Playarea_Paint);
+            this.panel2.Controls.Add(this.btn_level2);
+            this.panel2.Controls.Add(this.btn_level1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(200, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(600, 450);
+            this.panel2.TabIndex = 1;
             // 
-            // bottomWall
+            // btn_level1
             // 
-            this.bottomWall.BackColor = System.Drawing.Color.Transparent;
-            this.bottomWall.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottomWall.Location = new System.Drawing.Point(1, 449);
-            this.bottomWall.Name = "bottomWall";
-            this.bottomWall.Size = new System.Drawing.Size(658, 1);
-            this.bottomWall.TabIndex = 3;
+            this.btn_level1.Location = new System.Drawing.Point(243, 264);
+            this.btn_level1.Name = "btn_level1";
+            this.btn_level1.Size = new System.Drawing.Size(75, 23);
+            this.btn_level1.TabIndex = 0;
+            this.btn_level1.Text = "Level 1";
+            this.btn_level1.UseVisualStyleBackColor = true;
+            this.btn_level1.Click += new System.EventHandler(this.btn_level1_Click);
             // 
-            // topWall
+            // btn_level2
             // 
-            this.topWall.BackColor = System.Drawing.Color.Transparent;
-            this.topWall.Dock = System.Windows.Forms.DockStyle.Top;
-            this.topWall.Location = new System.Drawing.Point(1, 0);
-            this.topWall.Name = "topWall";
-            this.topWall.Size = new System.Drawing.Size(658, 1);
-            this.topWall.TabIndex = 2;
-            // 
-            // rightWall
-            // 
-            this.rightWall.BackColor = System.Drawing.Color.Transparent;
-            this.rightWall.Dock = System.Windows.Forms.DockStyle.Right;
-            this.rightWall.Location = new System.Drawing.Point(659, 0);
-            this.rightWall.Name = "rightWall";
-            this.rightWall.Size = new System.Drawing.Size(1, 450);
-            this.rightWall.TabIndex = 1;
-            // 
-            // leftWall
-            // 
-            this.leftWall.BackColor = System.Drawing.Color.Transparent;
-            this.leftWall.Dock = System.Windows.Forms.DockStyle.Left;
-            this.leftWall.Location = new System.Drawing.Point(0, 0);
-            this.leftWall.Name = "leftWall";
-            this.leftWall.Size = new System.Drawing.Size(1, 450);
-            this.leftWall.TabIndex = 0;
-            // 
-            // game_timer
-            // 
-            this.game_timer.Enabled = true;
-            this.game_timer.Interval = 50;
-            this.game_timer.Tick += new System.EventHandler(this.game_timer_Tick);
+            this.btn_level2.Location = new System.Drawing.Point(339, 264);
+            this.btn_level2.Name = "btn_level2";
+            this.btn_level2.Size = new System.Drawing.Size(75, 23);
+            this.btn_level2.TabIndex = 1;
+            this.btn_level2.Text = "Level 2";
+            this.btn_level2.UseVisualStyleBackColor = true;
+            this.btn_level2.Click += new System.EventHandler(this.btn_level2_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.Playarea);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
             this.Text = "Brick Breaker";
-            this.Shown += new System.EventHandler(this.Playarea_Shown);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
-            this.Playarea.ResumeLayout(false);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -123,12 +92,9 @@ namespace Brick_Breaker
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel Playarea;
-        private System.Windows.Forms.Timer game_timer;
-        private System.Windows.Forms.Panel leftWall;
-        private System.Windows.Forms.Panel rightWall;
-        private System.Windows.Forms.Panel topWall;
-        private System.Windows.Forms.Panel bottomWall;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btn_level1;
+        private System.Windows.Forms.Button btn_level2;
     }
 }
 

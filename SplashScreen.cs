@@ -29,7 +29,7 @@ namespace Brick_Breaker
         {
             timer.Stop();
             Form1 f1 = new Form1();
-            f1.Show();
+            f1.ShowDialog();
             this.Hide();
         }
     }
